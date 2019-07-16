@@ -123,12 +123,12 @@
 <br>
 <br>
 <div align = "center">
-	<c:if test="${!empty listCurrItems}">
-        <table border="1">
+	  <c:if test="${!empty listCurrItems}">
+        <table border="1" style="table-layout:fixed;width:1000px;">
             <caption><h2>Current Bill</h2></caption>
             <tr>
                 <th>BillID</th>
-                <th>Item</th>
+                <th colspan="2">Item</th>
                 <th>Harshit</th>
                 <th>Harish</th>
                 <th>Deep</th>
@@ -139,7 +139,7 @@
             <c:forEach var="bill" items="${listCurrItems}">
                 <tr>
                     <td><c:out value="${bill.getBillsID()}" /></td>
-                    <td><c:out value="${bill.getBillItem()}" /></td>
+                    <td colspan="2"><c:out value="${bill.getBillItem()}" /></td>
                     <td><c:out value="${bill.getHarshitCost()}" /></td>
                     <td><c:out value="${bill.getHarishCost()}" /></td>
                     <td><c:out value="${bill.getDeepCost()}" /></td>
@@ -149,11 +149,12 @@
                 </tr>
             </c:forEach>
             
-	</c:if>        	
+	        	
         </table>
+       </c:if> 
         
         <c:if test="${!empty listCurrTotal}">
-        <table border="1" style="width:300px;">
+        <table border="1" style="table-layout:fixed;width:1000px;">
             <c:forEach var="billTotal" items="${listCurrTotal}">
                 <tr>
                     <td colspan="3"><strong>Total</strong></td>
@@ -165,8 +166,9 @@
                 </tr>
             </c:forEach>
             
-        </c:if>        	
+             	
         </table>
+        </c:if>  
 </div>
 </body>
 </html>
