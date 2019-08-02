@@ -167,8 +167,15 @@
             </c:forEach>
             
              	
-        </table>
-        </c:if>  
+        </table><br>
+        </c:if>
+        <form action="AddBillController?action=deleteBill" method="post" id="deleteForm">
+        	<input type="submit" value="Delete Bill" id="delete" name="delete">
+        </form>
+        
+        <form action="AddBillController?action=submitBill" method="post" id="submitBillForm">
+        	<input type="submit" value="Submit Bill" id="submitbill" name="submitbill">
+        </form>  
 </div>
 </body>
 </html>

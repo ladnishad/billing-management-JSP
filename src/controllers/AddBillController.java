@@ -56,6 +56,12 @@ public class AddBillController extends HttpServlet {
 			url = "/Homepage.jsp";
 			listAllItemNames = itemsDAO.listAllItemNames();
 			request.setAttribute("listAllItemNames", listAllItemNames);
+			
+			List<AddBillModel> listCurrItems = billsDAO.listCurrItems();
+            List<AddBillModel> listCurrTotal = billsDAO.listCurrTotal();
+            request.setAttribute("listCurrItems", listCurrItems);
+            request.setAttribute("listCurrTotal", listCurrTotal);
+            
 			getServletContext().getRequestDispatcher(url).forward(request, response);
 			} catch (SQLException e) {
 			e.printStackTrace();
@@ -141,7 +147,6 @@ public class AddBillController extends HttpServlet {
         	String qty2 = request.getParameter("qtyText1");
         	
         	String BillID = constructBillId();
-        	System.out.println(ItemName+","+ItemQty+","+numOfUsers+","+User1+","+User2+","+qty1+","+qty2+","+BillID);
         	billsDAO.insertPersonalTwo(ItemName,ItemQty,numOfUsers,User1,User2,qty1,qty2,BillID);
         	
         	System.out.println(ItemName+","+ItemQty+","+numOfUsers+","+User1+","+User2+","+qty1+","+qty2+","+BillID);
@@ -170,6 +175,20 @@ public class AddBillController extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("Homepage.jsp");
             dispatcher.forward(request, response);
         }
+    }
+	
+	private void deleteBill(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException{
+		billsDAO.deleteBill();
+        
+        RequestDispatcher dispatcher = request.getRequestDispatcher("Homepage.jsp");
+        dispatcher.forward(request, response);
+    }
+	
+	private void submitBill(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException{
+		billsDAO.submitBill();
+        
+        RequestDispatcher dispatcher = request.getRequestDispatcher("Homepage.jsp");
+        dispatcher.forward(request, response);
     }
 	
 	private String constructBillId(){
@@ -208,6 +227,21 @@ public class AddBillController extends HttpServlet {
 				e.printStackTrace();
 			}
 			break;
+		case "deleteBill":
+			try{
+				deleteBill(request,response);
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+			break;
+		case "submitBill":
+			try{
+				submitBill(request,response);
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+			break;
+			
         default:
         	//response.sendRedirect("Homepage.jsp");
             break;

@@ -9,12 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import models.AddItemModel;
+import util.SQLConnection;
 
 public class AddItemDAO {
 	private String jdbcURL;
     private String jdbcUsername;
     private String jdbcPassword;
     private Connection jdbcConnection;
+    
+    static SQLConnection sqlconnection = SQLConnection.getInstance();
     
     public AddItemDAO(String jdbcURL, String jdbcUsername, String jdbcPassword) {
         this.jdbcURL = jdbcURL;
@@ -42,10 +45,11 @@ public class AddItemDAO {
     
     
     public boolean insertItem(AddItemModel addItemModel) throws SQLException {
+    	
 		String sql = "INSERT INTO `bills_management`.`items` (ItemName,ItemCost,ItemComm) VALUES(?,?,?)";
 		//String sql = "INSERT INTO `bills_management`.`items` (ItemName,ItemCost,ItemComm) VALUES('"+addItemModel.getItemName()+"','"+addItemModel.getItemCost()+"','"+addItemModel.getItemComm()+"')";
-		connect();
-         
+		
+		 
         PreparedStatement statement = jdbcConnection.prepareStatement(sql);
         //statement.setString(1, "");
         statement.setString(1, addItemModel.getItemName());
@@ -80,6 +84,42 @@ public class AddItemDAO {
     	disconnect();
     	return listItems;
     	}
+    
+    public static boolean verifyItemName(String ItemName) throws SQLException
+	{
+    	Connection conn = null;
+		Statement stmt = null;
+		conn = SQLConnection.getDBConnection();
+    	boolean itemPresent = false;
+    	
+    	try {
+			stmt = conn.createStatement();
+			String queryString = "select ItemName from `bills_management`.`Items` where ItemName ='"+ItemName+"'";
+			ResultSet rs = stmt.executeQuery(queryString);
+			while (rs.next()) {
+				String k = (String) rs.getObject(1);
+				itemPresent= true;
+					break;
+				}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	finally {
+			try {				
+				if(conn!=null)
+					conn.close();
+				if(stmt!=null)
+					stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return itemPresent;
+	}
+    
+				
     
     public List<AddItemModel> listAllItemNames() throws SQLException {
     	List<AddItemModel> listAllItemNames = new ArrayList<>();

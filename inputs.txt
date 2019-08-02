@@ -1,0 +1,10 @@
+Add/view items
+
+item name : can't have '
+	    can't be blank
+	    shouldn't be present in db
+	
+cost	  : can't be blank
+	    no special characters, alphabets (including ')
+
+Comments : can't have '

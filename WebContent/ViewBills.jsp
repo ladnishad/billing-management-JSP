@@ -8,6 +8,12 @@
 <title>View Bills</title>
 </head>
 <body>
+
+<form action="AddItemController?action=list" method="post">
+	
+	<input type="button" onclick="location.href='Homepage.jsp'" value="Home" class="button" id="HomeButton" name="HomeButton">	
+	<input type="submit" value="View/Add Items" class="button" id="listitempage" name="listitempage">
+</form>	
 <form action="ListBillController?action=listbill" method="post">
 	<label for="ItemName">Enter BillID: </label>
 	<input type="text" id="BillIDinput" name="BillIDinput" required>

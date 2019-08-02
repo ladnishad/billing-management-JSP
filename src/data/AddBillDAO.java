@@ -42,7 +42,34 @@ public class AddBillDAO {
         }
     }
     
+    public boolean deleteBill() throws SQLException{
+    	
+    	String sql = "Delete from bills;";
+		connect();
+		PreparedStatement preparedStatement = jdbcConnection.prepareStatement(sql);
+		boolean deleted = preparedStatement.executeUpdate() > 0;
+        preparedStatement.close();
+        
+		disconnect();
+		
+		return deleted;
+    	
+    }
     
+    public boolean submitBill() throws SQLException{
+    	
+    	String sql = "INSERT INTO bills_management.billslist (`billsid`, `billitem`, `harshitcost`, `harishcost`,`deepcost`,`nishadcost`,`totalqty`,`totalcost`) SELECT * FROM bills_management.bills;";
+		connect();
+		PreparedStatement preparedStatement = jdbcConnection.prepareStatement(sql);
+		boolean submitted = preparedStatement.executeUpdate() > 0;
+        preparedStatement.close();
+        
+		disconnect();
+		
+		return submitted;
+    	
+    }
+
     public boolean insertCommon(String itemName,String totalQty,String billID) throws SQLException {
     	String getCost = "SELECT ItemCost FROM items where ItemName = "+"'"+itemName+"';";
     	String cost = "";

@@ -8,29 +8,34 @@
 <title>Add and view items</title>
 </head>
 <body>
-<a href="Homepage.jsp">Back</a>
-<a href="ViewBills.jsp">View Past Bills</a>
-<div align="center">
+
+<input type="button" onclick="location.href='Homepage.jsp'" value="Home" class="button" id="HomeButton" name="HomeButton">
+<input type="button" onclick="location.href='ViewBills.jsp'" value="View past bills" class="button" id="viewBillsButton" name="viewBillsButton"> <br><br>
 <h1>Add/View Items</h1>
-
+<input name="errMsg" id="error" value="<c:out value='${errorMsgs.errorMsg}'/>" type="text" style ="background-color: white; color: red; border: none; width:800px" disabled="disabled"><br>
 	<form action="AddItemController?action=additem" method="post">
-		<label for="ItemName">Enter Item Name</label>
-		<input type="text" id="itemnameinput" name="itemnameinput" placeholder="Eg: Eggs, Milk,.." required><br><br>
-
-    	<label for="ItemCost">Enter Cost of the item</label>
-    	<input type="text" id="itemcostinput" name="itemcostinput" placeholder="Eg: 20" required><br><br>
-
-    	<label for="Comments">Comments/Keywords</label>
-    	<input type="text" id="itemcominput" name="itemcominput" placeholder="Brand name/Extra details"><br><br>
+	<table align = "center">
+		<tr>
+		<td><label for="ItemName">Enter Item Name</label></td>
+		<td><input type="text" id="itemnameinput" name="itemnameinput" placeholder="Eg: Eggs, Milk,.."></td>
+		<td><input value="<c:out value='${ItemNameErrMsg}'/>" id = "ItemNameErrMsg" type="text" style ="background-color: white; color: red; border: none; width: 800px" disabled="disabled" maxlength="60"></td>
+		</tr>
+		<tr>
+    	<td><label for="ItemCost">Enter Cost of the item</label></td>
+    	<td><input type="text" id="itemcostinput" name="itemcostinput" placeholder="Eg: 20"></td>
+    	<td><input value="<c:out value='${ItemCostErrMsg}'/>" id = "ItemCostErrMsg" type="text" style ="background-color: white; color: red; border: none; width: 800px" disabled="disabled" maxlength="60"></td>
+    	</tr>
+    	<tr>
+    	<td><label for="Comments">Comments/Keywords</label></td>
+    	<td><input type="text" id="itemcominput" name="itemcominput" placeholder="Brand name/Extra details"></td>
+    	<td><input value="<c:out value='${ItemCommErrMsg}'/>" id = "ItemCommErrMsg" type="text" style ="background-color: white; color: red; border: none; width: 800px" disabled="disabled" maxlength="60"></td>
+    	</tr>
+    </table>
     	<input type="submit" value="Add" class="button" id="submitadditem" name="submitadditem">
 	</form><br>
-	<form action="AddItemController?action=list" method="post">
-		
-		<input type="submit" value="List" class="button" id="listitem" name="listitem">
-		
-	</form>
+	<input value="<c:out value='${errMsgs}'/>" id = "ItemErrMsg" type="text" style ="background-color: white; color: red; border: none; width: 800px" disabled="disabled" maxlength="60"><br>
 		<c:if test="${empty listItems}">
-		<input id="alert" name="AlertMsg" value="<c:out value='Sorry! No items found.'/>" type="text" style ="background-color: white; color: red; border: none; width:800px" disabled="disabled">
+		<input id="alert" name="AlertMsg" value="<c:out value='Press List button to list items added.'/>" type="text" style ="background-color: white; color: red; border: none; width:800px" disabled="disabled">
 		</c:if>
 		<c:if test="${!empty listItems}">
         <table border="1" cellpadding="5">
@@ -52,6 +57,5 @@
         	</c:if>
         </table>
         
-    </div>
 </body>
 </html>

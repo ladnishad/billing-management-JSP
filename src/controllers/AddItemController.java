@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import data.AddItemDAO;
+import models.AddItemErrMsgs;
 import models.AddItemModel;
 
 /**
@@ -21,6 +22,7 @@ import models.AddItemModel;
 public class AddItemController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private AddItemDAO addItemdao;
+	String url = "";
 	 
     public void init() {
         String jdbcURL = getServletContext().getInitParameter("jdbcURL");
@@ -42,6 +44,49 @@ public class AddItemController extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+    
+    private void listItems(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
+        List<AddItemModel> listItems = addItemdao.listAllItems();
+        url = "/AddItem.jsp";
+        request.setAttribute("listItems", listItems);
+        getServletContext().getRequestDispatcher(url).forward(request, response);
+        
+    }
+	
+	private void addItem(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException,ServletException {
+        String ItemName = request.getParameter("itemnameinput");
+        String ItemCost = request.getParameter("itemcostinput");
+        String ItemComm = request.getParameter("itemcominput");
+        List<AddItemModel> listItems = addItemdao.listAllItems();
+        url = "/AddItem.jsp";
+        
+        AddItemErrMsgs addItemErrMsgs = new AddItemErrMsgs();
+        AddItemModel addItemModel = new AddItemModel(ItemName, ItemCost, ItemComm);
+        request.setAttribute("listItems", listItems);
+        addItemModel.validateItem(addItemModel,addItemErrMsgs,"");
+        
+        if(!addItemErrMsgs.getErrorMsg().equals("")) {
+        	request.setAttribute("ItemNameErrMsg",addItemErrMsgs.getItemNameErrMsg());
+        	request.setAttribute("ItemCostErrMsg",addItemErrMsgs.getItemCostErrMsg());
+        	request.setAttribute("ItemCommErrMsg",addItemErrMsgs.getItemCommErrMsg());
+        	request.setAttribute("errMsgs",addItemErrMsgs.getErrorMsg());
+        	//response.sendRedirect(url);
+        	getServletContext().getRequestDispatcher(url).forward(request, response);
+            
+            
+		}
+        else{
+        	//addItemdao.insertItem(addItemModel);
+        	System.out.println("Entered");
+        	
+        	
+        }
+        
+        //response.sendRedirect("list");
+        
+        
+    }
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String action = request.getParameter("action");
@@ -49,12 +94,10 @@ public class AddItemController extends HttpServlet {
 		try {
             switch (action) {
             case "additem":
-                addItem(request, response);
-                listItems(request, response);
+            	//listItems(request, response);
+            	addItem(request, response);
                 break;
-            case "list":
-            	listItems(request, response);
-                break;
+            
             default:
                 listItems(request, response);
                 break;
@@ -64,23 +107,7 @@ public class AddItemController extends HttpServlet {
         }
 	}
 	
-	private void listItems(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
-        List<AddItemModel> listItems = addItemdao.listAllItems();
-        request.setAttribute("listItems", listItems);
-        getServletContext().getRequestDispatcher("/AddItem.jsp").forward(request, response);
-    }
 	
-	private void addItem(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-        String ItemName = request.getParameter("itemnameinput");
-        String ItemCost = request.getParameter("itemcostinput");
-        String ItemComm = request.getParameter("itemcominput");
- 
-        AddItemModel addItemModel = new AddItemModel(ItemName, ItemCost, ItemComm);
-        addItemdao.insertItem(addItemModel);
-        //response.sendRedirect("list");
-        
-        
-    }
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
