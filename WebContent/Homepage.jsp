@@ -161,27 +161,7 @@
 		
 		
 	}
-			
-	function checkInput(input){
-		var isPresent = false;
-		var lowInput = input.toLowerCase();
-		var inputArray = lowInput.split('');
-		var array = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','\'','~', '!', '@', '#','$','%','^','&','*','(',')','_','-','+','=','{','}','[',']',':',';','"','<','>','?','/','\\'];
-		//Salert('Entered '+inputArray);
-		for(var i=0;i<array.length;i++) {
-			var a = array[i];
-			var b = inputArray[i]
-			if(b == a){
-				isPresent = true;
-				break;
-			}
-		}
-		return isPresent;		
-	}
-		
-		
-		
-		
+					
 </script>
 </head>
 <body>
