@@ -8,12 +8,15 @@
 <title>Home</title>
 
 <script type="text/javascript">
+	
+	
 	function revealUsers(){
 		
 		var text = document.getElementById('PersitemUsers');
 		var itemTypePersonal = document.getElementById('itemTypePersonal');
 		var personalForm = document.getElementById('personalForm');
 		var num = parseInt(text.value);
+		var textInput = num.toString().toUpperCase();
 		
 		if(num == 0){
 			document.getElementById('PNumUsersErrMsg').value = 'Input cannot be 0.';
@@ -23,6 +26,9 @@
 			document.getElementById('PNumUsersErrMsg').value = 'Input cannot be greater than 4.';
 		}
 		
+		else if(textInput == 'NAN'){
+			document.getElementById('PNumUsersErrMsg').value = 'Enter a valid input.';
+		}
 		
 		else{
 			document.getElementById('PNumUsersErrMsg').value = '';
@@ -156,7 +162,22 @@
 		
 	}
 			
-			
+	function checkInput(input){
+		var isPresent = false;
+		var lowInput = input.toLowerCase();
+		var inputArray = lowInput.split('');
+		var array = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','\'','~', '!', '@', '#','$','%','^','&','*','(',')','_','-','+','=','{','}','[',']',':',';','"','<','>','?','/','\\'];
+		//Salert('Entered '+inputArray);
+		for(var i=0;i<array.length;i++) {
+			var a = array[i];
+			var b = inputArray[i]
+			if(b == a){
+				isPresent = true;
+				break;
+			}
+		}
+		return isPresent;		
+	}
 		
 		
 		
