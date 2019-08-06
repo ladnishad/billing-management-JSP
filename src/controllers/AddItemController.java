@@ -76,8 +76,7 @@ public class AddItemController extends HttpServlet {
             
 		}
         else{
-        	//addItemdao.insertItem(addItemModel);
-        	System.out.println("Entered");
+        	addItemdao.insertItem(addItemModel);
         	
         	
         }

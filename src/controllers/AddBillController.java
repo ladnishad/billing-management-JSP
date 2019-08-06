@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import data.AddBillDAO;
 import data.AddItemDAO;
 import data.BillsDAO;
+import models.AddBillErrMsgs;
 import models.AddBillModel;
 import models.AddItemModel;
 import models.BillsModel;
@@ -78,22 +79,39 @@ public class AddBillController extends HttpServlet {
         String ItemQty = request.getParameter("CommitemQty");
         String BillID = constructBillId();
         
-        billsDAO.insertCommon(ItemName,ItemQty,BillID);
+        AddBillErrMsgs addBillErrMsgs = new AddBillErrMsgs();
+        AddBillModel addBill = new AddBillModel(ItemName,ItemQty);
+        addBill.validateCommonItem(addBill, addBillErrMsgs, "");
         
-        List<AddBillModel> listCurrItems = billsDAO.listCurrItems();
-        List<AddBillModel> listCurrTotal = billsDAO.listCurrTotal();
-        request.setAttribute("listCurrItems", listCurrItems);
-        request.setAttribute("listCurrTotal", listCurrTotal);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("Homepage.jsp");
-        dispatcher.forward(request, response);
+        if(!addBillErrMsgs.getErrorMsg().equals("")){
+        	request.setAttribute("CItemErrMsg",addBillErrMsgs.getCommItemNameErrMsg());
+        	request.setAttribute("CQtyErrMsg",addBillErrMsgs.getCommItemQtyErrMsg());
+        	request.setAttribute("CerrMsgs",addBillErrMsgs.getErrorMsg());
+        	//response.sendRedirect(url);
+        	getServletContext().getRequestDispatcher("/Homepage.jsp").forward(request, response);
+        }
+        else{
+        	billsDAO.insertCommon(ItemName,ItemQty,BillID);
+            
+            List<AddBillModel> listCurrItems = billsDAO.listCurrItems();
+            List<AddBillModel> listCurrTotal = billsDAO.listCurrTotal();
+            request.setAttribute("listCurrItems", listCurrItems);
+            request.setAttribute("listCurrTotal", listCurrTotal);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("Homepage.jsp");
+            dispatcher.forward(request, response);	
+        }
+        
     }
 	
 	private void insertPrivate(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException{
 		String ItemName = request.getParameter("itemlistText");
         String ItemQty = request.getParameter("PersitemQty");
         String numOfUsers = request.getParameter("PersitemUsers");
-        
         int num = Integer.parseInt(numOfUsers);
+        
+        AddBillErrMsgs addBillErrMsgs = new AddBillErrMsgs();
+        AddBillModel addBill = new AddBillModel(ItemName,ItemQty,numOfUsers);
+        
         
         if(num == 4){
         	String User1 = request.getParameter("mySelect0");
@@ -106,76 +124,160 @@ public class AddBillController extends HttpServlet {
         	String qty3 = request.getParameter("qtyText2");
         	String qty4 = request.getParameter("qtyText3");
         	
-        	String BillID = constructBillId();
+        	AddBillModel addBillVer4 = new AddBillModel(User1,User2,User3,User4);
+        	AddBillModel addBillVer4qty = new AddBillModel(qty1,qty2,qty3,qty4,ItemQty,ItemName);
         	
-        	billsDAO.insertPersonalFour(ItemName,ItemQty,numOfUsers,User1,User2,User3,User4,qty1,qty2,qty3,qty4,BillID);
-            
-            List<AddBillModel> listCurrItems = billsDAO.listCurrItems();
-            List<AddBillModel> listCurrTotal = billsDAO.listCurrTotal();
-            request.setAttribute("listCurrItems", listCurrItems);
-            request.setAttribute("listCurrTotal", listCurrTotal);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("Homepage.jsp");
-            dispatcher.forward(request, response);
+        	
+        	addBill.validatePersonalItem(addBill, addBillErrMsgs, "");
+        	addBillVer4.validate4Users(addBillVer4, addBillErrMsgs, "");
+        	addBillVer4qty.validateQty4(addBillVer4qty, addBillErrMsgs, "");
+        	
+        	if(!addBillErrMsgs.getErrorMsg().equals("")){
+            	request.setAttribute("PItemErrMsg",addBillErrMsgs.getPerItemNameErrMsg());
+            	request.setAttribute("PQtyErrMsg",addBillErrMsgs.getPerItemQtyErrMsg());
+            	request.setAttribute("PNumUsersErrMsg",addBillErrMsgs.getPerNumUsersErrMsg());
+            	request.setAttribute("PSpecialUsrErrMsg",addBillErrMsgs.getPerSpecialUsrErrMsg());
+        		request.setAttribute("PSpecialQtyErrMsg",addBillErrMsgs.getPerSpecialQtyErrMsg());
+        		//response.sendRedirect(url);
+            	getServletContext().getRequestDispatcher("/Homepage.jsp").forward(request, response);
+            }
+        	
+        	else{
+        		String BillID = constructBillId();
+        		
+        		billsDAO.insertPersonalFour(ItemName,ItemQty,numOfUsers,User1,User2,User3,User4,qty1,qty2,qty3,qty4,BillID);
+                
+                List<AddBillModel> listCurrItems = billsDAO.listCurrItems();
+                List<AddBillModel> listCurrTotal = billsDAO.listCurrTotal();
+                request.setAttribute("listCurrItems", listCurrItems);
+                request.setAttribute("listCurrTotal", listCurrTotal);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("Homepage.jsp");
+                dispatcher.forward(request, response);
+        	}
+        	
         }
         
         else if(num == 3){
-        	String User1 = request.getParameter("mySelect0");
-        	String User2 = request.getParameter("mySelect1");
-        	String User3 = request.getParameter("mySelect2");
-        	
-        	String qty1 = request.getParameter("qtyText0");
-        	String qty2 = request.getParameter("qtyText1");
-        	String qty3 = request.getParameter("qtyText2");
-        	
-        	String BillID = constructBillId();
-        	
-        	billsDAO.insertPersonalThree(ItemName,ItemQty,numOfUsers,User1,User2,User3,qty1,qty2,qty3,BillID);
+            	String User1 = request.getParameter("mySelect0");
+            	String User2 = request.getParameter("mySelect1");
+            	String User3 = request.getParameter("mySelect2");
+            	
+            	String qty1 = request.getParameter("qtyText0");
+            	String qty2 = request.getParameter("qtyText1");
+            	String qty3 = request.getParameter("qtyText2");
+            	
+            	AddBillModel addBillVer3 = new AddBillModel(User1,User2,User3,2);
+            	AddBillModel addBillVer3qty = new AddBillModel(qty1,qty2,qty3,ItemQty,2);
+            	
+            	addBill.validatePersonalItem(addBill, addBillErrMsgs, "");
+            	addBillVer3.validate3Users(addBillVer3, addBillErrMsgs, "");
+            	addBillVer3qty.validateQty3(addBillVer3qty, addBillErrMsgs, "");
+            	
+            	if(!addBillErrMsgs.getErrorMsg().equals("")){
+                	request.setAttribute("PItemErrMsg",addBillErrMsgs.getPerItemNameErrMsg());
+                	request.setAttribute("PQtyErrMsg",addBillErrMsgs.getPerItemQtyErrMsg());
+                	request.setAttribute("PNumUsersErrMsg",addBillErrMsgs.getPerNumUsersErrMsg());
+                	request.setAttribute("PSpecialUsrErrMsg",addBillErrMsgs.getPerSpecialUsrErrMsg());
+            		request.setAttribute("PSpecialQtyErrMsg",addBillErrMsgs.getPerSpecialQtyErrMsg());
+            		//response.sendRedirect(url);
+                	getServletContext().getRequestDispatcher("/Homepage.jsp").forward(request, response);
+                }
+            	
+            	else{
+            		String BillID = constructBillId();
+                	
+                	billsDAO.insertPersonalThree(ItemName,ItemQty,numOfUsers,User1,User2,User3,qty1,qty2,qty3,BillID);
+                        
+                    List<AddBillModel> listCurrItems = billsDAO.listCurrItems();
+                    List<AddBillModel> listCurrTotal = billsDAO.listCurrTotal();
+                    request.setAttribute("listCurrItems", listCurrItems);
+                    request.setAttribute("listCurrTotal", listCurrTotal);
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("Homepage.jsp");
+                    dispatcher.forward(request, response);
+            	}
+            	
+            }
             
-            List<AddBillModel> listCurrItems = billsDAO.listCurrItems();
-            List<AddBillModel> listCurrTotal = billsDAO.listCurrTotal();
-            request.setAttribute("listCurrItems", listCurrItems);
-            request.setAttribute("listCurrTotal", listCurrTotal);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("Homepage.jsp");
-            dispatcher.forward(request, response);
-        }
-        
-        else if(num == 2){
-        	String User1 = request.getParameter("mySelect0");
-        	String User2 = request.getParameter("mySelect1");
-        	
-        	String qty1 = request.getParameter("qtyText0");
-        	String qty2 = request.getParameter("qtyText1");
-        	
-        	String BillID = constructBillId();
-        	billsDAO.insertPersonalTwo(ItemName,ItemQty,numOfUsers,User1,User2,qty1,qty2,BillID);
-        	
-        	System.out.println(ItemName+","+ItemQty+","+numOfUsers+","+User1+","+User2+","+qty1+","+qty2+","+BillID);
+            else if(num == 2){
+            	String User1 = request.getParameter("mySelect0");
+            	String User2 = request.getParameter("mySelect1");
+            	
+            	String qty1 = request.getParameter("qtyText0");
+            	String qty2 = request.getParameter("qtyText1");
+            	
+            	//AddBillModel addBillVer2 = new AddBillModel(User1,User2,qty1,qty2,ItemQty);
+            	
+            	AddBillModel addBillVer2 = new AddBillModel(User1,User2,2);
+            	AddBillModel addBillVer2qty = new AddBillModel(qty1,qty2,ItemQty,2.5);
+            	
+            	addBill.validatePersonalItem(addBill, addBillErrMsgs, "");
+            	addBillVer2.validate2Users(addBillVer2, addBillErrMsgs, "");
+            	addBillVer2qty.validateQty2(addBillVer2qty, addBillErrMsgs, "");
+            	
+            	if(!addBillErrMsgs.getErrorMsg().equals("")){
+                	request.setAttribute("PItemErrMsg",addBillErrMsgs.getPerItemNameErrMsg());
+                	request.setAttribute("PQtyErrMsg",addBillErrMsgs.getPerItemQtyErrMsg());
+                	request.setAttribute("PNumUsersErrMsg",addBillErrMsgs.getPerNumUsersErrMsg());
+                	request.setAttribute("PSpecialUsrErrMsg",addBillErrMsgs.getPerSpecialUsrErrMsg());
+            		request.setAttribute("PSpecialQtyErrMsg",addBillErrMsgs.getPerSpecialQtyErrMsg());
+            		//response.sendRedirect(url);
+                	getServletContext().getRequestDispatcher("/Homepage.jsp").forward(request, response);
+                }
+            	
+            	else{
+            		String BillID = constructBillId();
+            		billsDAO.insertPersonalTwo(ItemName,ItemQty,numOfUsers,User1,User2,qty1,qty2,BillID);
+                	
+                	//System.out.println(ItemName+","+ItemQty+","+numOfUsers+","+User1+","+User2+","+qty1+","+qty2+","+BillID);
+                    
+                    List<AddBillModel> listCurrItems = billsDAO.listCurrItems();
+                    List<AddBillModel> listCurrTotal = billsDAO.listCurrTotal();
+                    request.setAttribute("listCurrItems", listCurrItems);
+                    request.setAttribute("listCurrTotal", listCurrTotal);
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("Homepage.jsp");
+                    dispatcher.forward(request, response);
+            	}
+            }
             
-            List<AddBillModel> listCurrItems = billsDAO.listCurrItems();
-            List<AddBillModel> listCurrTotal = billsDAO.listCurrTotal();
-            request.setAttribute("listCurrItems", listCurrItems);
-            request.setAttribute("listCurrTotal", listCurrTotal);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("Homepage.jsp");
-            dispatcher.forward(request, response);
+            else if(num == 1){
+            	String User1 = request.getParameter("mySelect0");
+            	
+            	String qty1 = request.getParameter("qtyText0");
+            	
+            	AddBillModel addBillVer1 = new AddBillModel(User1,2);
+            	AddBillModel addBillVer1qty = new AddBillModel(qty1,ItemQty,2.5);
+            	
+            	addBill.validatePersonalItem(addBill, addBillErrMsgs, "");
+            	addBillVer1qty.validateQty1(addBillVer1qty, addBillErrMsgs, "");
+            	
+            	if(!addBillErrMsgs.getErrorMsg().equals("")){
+                	request.setAttribute("PItemErrMsg",addBillErrMsgs.getPerItemNameErrMsg());
+                	request.setAttribute("PQtyErrMsg",addBillErrMsgs.getPerItemQtyErrMsg());
+                	request.setAttribute("PNumUsersErrMsg",addBillErrMsgs.getPerNumUsersErrMsg());
+                	request.setAttribute("PSpecialUsrErrMsg",addBillErrMsgs.getPerSpecialUsrErrMsg());
+            		request.setAttribute("PSpecialQtyErrMsg",addBillErrMsgs.getPerSpecialQtyErrMsg());
+            		//response.sendRedirect(url);
+                	getServletContext().getRequestDispatcher("/Homepage.jsp").forward(request, response);
+                }
+            	
+            	else{
+            		String BillID = constructBillId();
+                	billsDAO.insertPersonalOne(ItemName,ItemQty,numOfUsers,User1,qty1,BillID);
+                        
+                    List<AddBillModel> listCurrItems = billsDAO.listCurrItems();
+                    List<AddBillModel> listCurrTotal = billsDAO.listCurrTotal();
+                    request.setAttribute("listCurrItems", listCurrItems);
+                    request.setAttribute("listCurrTotal", listCurrTotal);
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("Homepage.jsp");
+                    dispatcher.forward(request, response);
+            	}
+            	
+            	
+            }
+            	
+        	
         }
-        
-        else{
-        	String User1 = request.getParameter("mySelect0");
-        	
-        	String qty1 = request.getParameter("qtyText0");
-        	
-        	String BillID = constructBillId();
-        	
-        	billsDAO.insertPersonalOne(ItemName,ItemQty,numOfUsers,User1,qty1,BillID);
-            
-            List<AddBillModel> listCurrItems = billsDAO.listCurrItems();
-            List<AddBillModel> listCurrTotal = billsDAO.listCurrTotal();
-            request.setAttribute("listCurrItems", listCurrItems);
-            request.setAttribute("listCurrTotal", listCurrTotal);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("Homepage.jsp");
-            dispatcher.forward(request, response);
-        }
-    }
+     
 	
 	private void deleteBill(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException{
 		billsDAO.deleteBill();

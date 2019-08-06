@@ -10,6 +10,7 @@ import java.util.List;
 
 import models.AddItemModel;
 import models.BillsModel;
+import util.SQLConnection;
 
 public class BillsDAO {
 	private String jdbcURL;
@@ -91,4 +92,37 @@ public class BillsDAO {
     	disconnect();
     	return listbillTotal;
     	}
+    
+    public static boolean verifyBillPresent(String billID) throws SQLException
+	{
+    	Connection conn = null;
+		Statement stmt = null;
+		conn = SQLConnection.getDBConnection();
+    	boolean billPresent = false;
+    	
+    	try {
+			stmt = conn.createStatement();
+			String queryString = "select BillsID from `bills_management`.`billslist` where BillsID ='"+billID+"'";
+			ResultSet rs = stmt.executeQuery(queryString);
+			while (rs.next()) {
+				String k = (String) rs.getObject(1);
+				billPresent = true;
+					break;
+				}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	finally {
+			try {				
+				if(conn!=null)
+					conn.close();
+				if(stmt!=null)
+					stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return billPresent;
+	}
 }

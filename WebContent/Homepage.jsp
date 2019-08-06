@@ -10,50 +10,157 @@
 <script type="text/javascript">
 	function revealUsers(){
 		
-		//document.getElementById("userselect").style.display = "inline";
 		var text = document.getElementById('PersitemUsers');
 		var itemTypePersonal = document.getElementById('itemTypePersonal');
 		var personalForm = document.getElementById('personalForm');
 		var num = parseInt(text.value);
-		//alert(num);
-
-		for (var i = 0; i < num; i++) {
-			var userLabel = document.createElement("label");
-			userLabel.id = "userLabel"+i;
-			userLabel.innerHTML = "Select User: ";
-			personalForm.appendChild(userLabel);
+		
+		if(num == 0){
+			document.getElementById('PNumUsersErrMsg').value = 'Input cannot be 0.';
+		}
+		
+		else if(num > 4){
+			document.getElementById('PNumUsersErrMsg').value = 'Input cannot be greater than 4.';
+		}
+		
+		
+		else{
+			document.getElementById('PNumUsersErrMsg').value = '';
+			var elementid = document.getElementById("userLabel"+0);
 			
-			var selectList = document.createElement("select");
-			selectList.setAttribute("id", "mySelect"+i);
-			selectList.setAttribute("name", "mySelect"+i);
-				
-			personalForm.appendChild(selectList);
-				
-			var qtyLabel = document.createElement("label");
-			qtyLabel.id = "qtyLabel"+i;
-			qtyLabel.innerHTML = "Enter Quantity: ";
-			personalForm.appendChild(qtyLabel);
-			var qtyText = document.createElement("input");
-			qtyText.Type = "text";
-			qtyText.id = "qtyText"+i;
-			qtyText.name = "qtyText"+i;
-			qtyText.placeholder = "Ex: 1,2,3,...";
-			personalForm.appendChild(qtyText);
-			linebreak = document.createElement("br");
-			personalForm.appendChild(linebreak);
-			linebreak = document.createElement("br");
-			personalForm.appendChild(linebreak);
-			
-			var optionArray = ["Harshit","Harish","Deep","Nishad"];
-			for (var j = 0; j < optionArray.length; j++) {
-				var option = document.createElement("option");
-				option.setAttribute("value",optionArray[j]);
-				option.text = optionArray[j];
-				selectList.appendChild(option);
+			if(elementid == null)
+			{
+				for (var i = 0; i < num && i < 4; i++)
+				{
+					
+					var userLabel = document.createElement("label");
+					userLabel.id = "userLabel"+i;
+					userLabel.innerHTML = "Select User: ";
+					personalForm.appendChild(userLabel);
+						
+					var selectList = document.createElement("select");
+					selectList.setAttribute("id", "mySelect"+i);
+					selectList.setAttribute("name", "mySelect"+i);
+							
+					personalForm.appendChild(selectList);
+							
+					var qtyLabel = document.createElement("label");
+					qtyLabel.id = "qtyLabel"+i;
+					qtyLabel.innerHTML = "Enter Quantity: ";
+					personalForm.appendChild(qtyLabel);
+						
+					var qtyText = document.createElement("input");
+					qtyText.Type = "text";
+					qtyText.id = "qtyText"+i;
+					qtyText.name = "qtyText"+i;
+					qtyText.placeholder = "Ex: 1,2,3,...";
+					personalForm.appendChild(qtyText);
+						
+					var linebreak = document.createElement("br");
+					linebreak.id = "br"
+					personalForm.appendChild(linebreak);
+						
+					//linebreak = document.createElement("br");
+					//personalForm.appendChild(linebreak);
+						
+					var optionArray = ["Harshit","Harish","Deep","Nishad"];
+					for (var j = 0; j < optionArray.length; j++) 
+					{
+						var option = document.createElement("option");
+						option.setAttribute("value",optionArray[j]);
+						option.text = optionArray[j];
+						selectList.appendChild(option);
+					}
+							
+				}
 			}
 				
+			else
+			{
+				for(var j=0;j<100;j++)
+				{
+					var UserLabelelement = document.getElementById("userLabel"+j);
+					personalForm.removeChild(UserLabelelement);
+						
+					var Selectelement = document.getElementById("mySelect"+j);
+					personalForm.removeChild(Selectelement);
+						
+					var QtyLabelelement = document.getElementById("qtyLabel"+j);
+					personalForm.removeChild(QtyLabelelement);
+						
+					var QtyTextelement = document.getElementById("qtyText"+j);
+					personalForm.removeChild(QtyTextelement);
+					
+					var breakElement = document.getElementById("br");
+					personalForm.removeChild(breakElement);
+				}
+					
+					
+				for (var i = 0; i < num && i < 4; i++) 
+				{
+					var userLabel = document.createElement("label");
+					userLabel.id = "userLabel"+i;
+					userLabel.innerHTML = "Select User: ";
+					personalForm.appendChild(userLabel);
+						
+					var selectList = document.createElement("select");
+					selectList.setAttribute("id", "mySelect"+i);
+					selectList.setAttribute("name", "mySelect"+i);
+							
+					personalForm.appendChild(selectList);
+							
+					var qtyLabel = document.createElement("label");
+					qtyLabel.id = "qtyLabel"+i;
+					qtyLabel.innerHTML = "Enter Quantity: ";
+					personalForm.appendChild(qtyLabel);
+						
+					var qtyText = document.createElement("input");
+					qtyText.Type = "text";
+					qtyText.id = "qtyText"+i;
+					qtyText.name = "qtyText"+i;
+					qtyText.placeholder = "Ex: 1,2,3,...";
+					personalForm.appendChild(qtyText);
+						
+					var linebreak = document.createElement("br");
+					linebreak.id = "br"
+					personalForm.appendChild(linebreak);
+					
+					//linebreak = document.createElement("br");
+					//personalForm.appendChild(linebreak);
+						
+					var optionArray = ["Harshit","Harish","Deep","Nishad"];
+					for (var j = 0; j < optionArray.length; j++) 
+					{
+						var option = document.createElement("option");
+						option.setAttribute("value",optionArray[j]);
+						option.text = optionArray[j];
+						selectList.appendChild(option);
+					}
+							
+				}
+					
+			}
+			var submit = document.createElement('input');
+			submit.setAttribute('type','submit');
+			submit.setAttribute('ID','personalAdd');
+			submit.setAttribute('value','Add to bill');
+			submit.setAttribute('form','personalForm');
+			personalForm.appendChild(submit);
+			linebreak = document.createElement("br");
+			personalForm.appendChild(linebreak);
+			linebreak = document.createElement("br");
+			personalForm.appendChild(linebreak);
 		}
+		
+		
+		
 	}
+			
+			
+		
+		
+		
+		
 </script>
 </head>
 <body>
@@ -77,15 +184,29 @@
 
 	<div id="itemTypeCommon">
 		<form action="AddBillController?action=addCommon" method="post">
-		<label>Select Item: </label>
-		<input name = "CommitemlistText" id="CommitemlistText" list="Commitemlist">
+		<table>
+		<tr>
+		<td><label>Select Item: </label></td>
+		
+		<td><input name = "CommitemlistText" id="CommitemlistText" list="Commitemlist">
 		<datalist id="Commitemlist" name="CommitemList">
 		<c:forEach items="${listAllItemNames}" var="names">
         	<option value="${names.getItemName()}">${names.getItemName()}</option>
     	</c:forEach>
-    	</datalist><br><br>
-    	<label>Enter Qty: </label>
-		<input type="text" name = "CommitemQty" id="CommitemQty" style="width: 130px;"><br><br>
+    	</datalist></td>
+    	<td><input value="<c:out value='${CItemErrMsg}'/>" id = "CItemErrMsg" type="text" style ="background-color: white; color: red; border: none; width: 200px" disabled="disabled" maxlength="60"></td>
+    	</tr>
+    	<tr>
+    	<td><label>Enter Qty: </label></td>
+		<td><input type="text" name = "CommitemQty" id="CommitemQty" style="width: 130px;"></td>
+		<td><input value="<c:out value='${CQtyErrMsg}'/>" id = "CQtyErrMsg" type="text" style ="background-color: white; color: red; border: none; width: 200px" disabled="disabled" maxlength="60"></td>
+		</tr>
+		</table>
+		<table>
+		<tr>
+		<td><input value="<c:out value='${CerrMsgs}'/>" id = "CerrMsgs" type="text" style ="background-color: white; color: red; border: none; width: 200px" disabled="disabled" maxlength="60"></td>
+		</tr>
+		</table>
 		<input type="submit" value="Add to Bill" id="commonAdd" name="commonAdd" >
 		</form>
 	</div>
@@ -99,19 +220,37 @@
 
 		<div id="itemTypePersonal">
 		<form action="AddBillController?action=addPersonal" method="post" id="personalForm">
-		<label>Select Item: </label>
-		<input name = "itemlistText" id="itemlistText" list="itemlist">
+		<table>
+		<tr>
+		<td><label>Select Item: </label></td>
+		<td><input name = "itemlistText" id="itemlistText" list="itemlist">
 		<datalist id="itemlist" name="itemList">
 		<c:forEach items="${listAllItemNames}" var="names">
         	<option value="${names.getItemName()}">${names.getItemName()}</option>
     	</c:forEach>
-    	</datalist><br><br>
-    	<label>Enter total qty: </label>
-    	<input type="text" name="PersitemQty" id="PersitemQty"><br><br>
-    	<label>Enter no of users: </label>
-    	<input type="text" name="PersitemUsers" id="PersitemUsers"><br><br>
-    	<input type="button" name="addusersbutton" id="addusersbutton" onclick="revealUsers()" value="Add Users">
-    	<input type="submit" value="Add to Bill" id="personalAdd" name="personalAdd"><br><br>
+    	</datalist></td>
+    	<td><input value="<c:out value='${PItemErrMsg}'/>" id = "PItemErrMsg" type="text" style ="background-color: white; color: red; border: none; width: 200px" disabled="disabled" maxlength="60"></td>
+		</tr>
+		<tr>
+		<td><label>Enter total qty: </label></td>
+		<td><input type="text" name="PersitemQty" id="PersitemQty"></td>
+		<td><input value="<c:out value='${PQtyErrMsg}'/>" id = "PQtyErrMsg" type="text" style ="background-color: white; color: red; border: none; width: 200px" disabled="disabled" maxlength="60"></td>
+		</tr>
+		<tr>
+		<td><label>Enter no of users: </label></td>
+		<td><input type="text" name="PersitemUsers" id="PersitemUsers"></td>
+		<td><input value="<c:out value='${PNumUsersErrMsg}'/>" id = "PNumUsersErrMsg" type="text" style ="background-color: white; color: red; border: none; width: 200px" disabled="disabled" maxlength="60"></td>
+		</tr>
+		</table>
+		<table>
+		<tr>
+		<td><input value="<c:out value='${PSpecialUsrErrMsg}'/>" id = "PSpecialUsrErrMsg" type="text" style ="background-color: white; color: red; border: none; width: 1000px" disabled="disabled" maxlength="60"></td>
+		</tr>
+		<tr>
+		<td><input value="<c:out value='${PSpecialQtyErrMsg}'/>" id = "PSpecialQtyErrMsg" type="text" style ="background-color: white; color: red; border: none; width: 1000px" disabled="disabled" maxlength="60"></td>
+		</tr>
+		</table>
+		<input type="button" name="addusersbutton" id="addusersbutton" onclick="revealUsers()" value="Add Users"><br><br>
     	
     	</form>
 		</div>

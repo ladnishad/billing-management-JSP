@@ -1,5 +1,9 @@
 package models;
 
+import java.sql.SQLException;
+
+import data.BillsDAO;
+
 public class BillsModel {
 	String BillID;
 	String BillItem;
@@ -14,6 +18,12 @@ public class BillsModel {
 	String NishadTotal;
 	String Total;
 	String TotalQty;
+	
+	public BillsModel(String BillID){
+		super();
+		
+		this.BillID = BillID;
+	}
 	
 	public BillsModel(String BillID, String BillItem, String HarshitCost, String HarishCost, String DeepCost, String NishadCost, String TotalCost, 
 			String HarshitTotal,
@@ -169,5 +179,59 @@ public class BillsModel {
 	
 	public void setTotal(String Total){
 		this.Total = Total;
+	}
+	
+	
+	public void validatePastBill(BillsModel billModel,BillsErrMsgs errMsgs,String isBill){
+		errMsgs.setPastBillErrMsg(validateInput(billModel.getBillID()));
+		String PastBillErrMsg = errMsgs.getPastBillErrMsg();
+		
+		if(!PastBillErrMsg.equals("")){
+			errMsgs.setErrorMsg("Please correct the following errors");
+		}
+		
+		else{
+			errMsgs.setErrorMsg("");
+		}
+		
+	}
+	
+	public String validateInput(String billID){
+		String result = "";
+		if(billID.equals("")){
+			result = "Please enter the Bill ID.";
+		}
+		
+		else if(specialCharPresent(billID)){
+			result = "No special character or alphabets allowed. Valid input ex: 08041923123";
+		} else
+			try {
+				if(!BillsDAO.verifyBillPresent(billID)){
+					result = "Bill does not exist.";
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		return result;
+	}
+	
+	public boolean specialCharPresent(String billid){
+		boolean isPresent = false;
+		String lowBillID = billid.toLowerCase();
+		char[] array = lowBillID.toCharArray();
+		char[] characters = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','\'','~', '!', '@', '#','$','%','^','&','*','(',')','_','-','+','=','{','}','[',']',':',';','"','<','>','?','/','\\'};
+		
+		for(int i=0;i<characters.length;i++) {
+			char a = characters[i];
+			for(char b: array) {
+				if (a == b){
+					isPresent = true;
+					break;
+				}
+			}
+		}
+		
+		return isPresent;
 	}
 }

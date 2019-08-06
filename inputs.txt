@@ -8,3 +8,28 @@ cost	  : can't be blank
 	    no special characters, alphabets (including ')
 
 Comments : can't have '
+
+
+Past Bills
+
+no blank ip
+no special chars or alphabets
+should be present in db
+
+Common item
+
+item cannot be blank
+item should be present in db
+Qty should be a number (no special chars)
+
+personal
+item cannot be blank
+item should be present in db
+
+Qty should be a number (no special chars)
+
+Num of users not greater than 4
+
+<input type="submit" value="Add to Bill" id="personalAdd" name="personalAdd"><br><br>
+    	
+

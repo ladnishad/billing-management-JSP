@@ -13,14 +13,19 @@
 	
 	<input type="button" onclick="location.href='Homepage.jsp'" value="Home" class="button" id="HomeButton" name="HomeButton">	
 	<input type="submit" value="View/Add Items" class="button" id="listitempage" name="listitempage">
-</form>	
+</form><br>
 <form action="ListBillController?action=listbill" method="post">
-	<label for="ItemName">Enter BillID: </label>
-	<input type="text" id="BillIDinput" name="BillIDinput" required>
-	<input type="submit" value="Search Bill" id="searchBill" name="searchBill">
-</form>
+<table>
+<tr>
+<td><label for="BillID" style = "width:100px;">Enter Bill ID: </label></td>
+<td><input type="text" id="BillIDinput" name="BillIDinput"></td>
+<td><input value="<c:out value='${SearchBillErrMsg}'/>" id = "SearchBillErrMsg" type="text" style ="background-color: white; color: red; border: none; width: 500px" disabled="disabled" maxlength="60"></td>
+</tr>		
+</table><br>
+<input type="submit" value="Search Bill" id="searchBill" name="searchBill">
+</form><br>
 		<c:if test="${!empty listbill}">
-        <table border="1">
+        <table border="1" style="table-layout:fixed;width:1000px;">
             <caption><h2>List of Items</h2></caption>
             <tr>
                 <th>BillID</th>
@@ -49,7 +54,7 @@
         </table>
         
         <c:if test="${!empty listbillTotal}">
-        <table border="1" style="width:300px;">
+        <table border="1" style="table-layout:fixed;width:1000px;">
             <c:forEach var="billTotal" items="${listbillTotal}">
                 <tr>
                     <td colspan="3"><strong>Total</strong></td>

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import data.AddItemDAO;
 import data.BillsDAO;
 import models.AddItemModel;
+import models.BillsErrMsgs;
 import models.BillsModel;
 
 /**
@@ -23,6 +24,7 @@ import models.BillsModel;
 public class ListBillController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private BillsDAO billsdao;
+	String url = "";
 	 
     public void init() {
         String jdbcURL = getServletContext().getInitParameter("jdbcURL");
@@ -64,14 +66,25 @@ public class ListBillController extends HttpServlet {
 	
 	private void listBill(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
 		String ItemID = request.getParameter("BillIDinput");
-        
-        List<BillsModel> listbill = billsdao.listBill(ItemID);
-        List<BillsModel> listbillTotal = billsdao.listBillTotal(ItemID);
-        request.setAttribute("listbill", listbill);
-        request.setAttribute("listbillTotal", listbillTotal);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("ViewBills.jsp");
-        dispatcher.forward(request, response);
-    }
+		url = "/ViewBills.jsp";
+		BillsErrMsgs searchBillErrMsgs = new BillsErrMsgs();
+		BillsModel billsModel = new BillsModel(ItemID);
+		billsModel.validatePastBill(billsModel, searchBillErrMsgs, "");
+		
+		if(!searchBillErrMsgs.getErrorMsg().equals("")){
+			request.setAttribute("SearchBillErrMsg",searchBillErrMsgs.getPastBillErrMsg());
+			getServletContext().getRequestDispatcher(url).forward(request, response);
+		}
+		
+		else{
+			List<BillsModel> listbill = billsdao.listBill(ItemID);
+	        List<BillsModel> listbillTotal = billsdao.listBillTotal(ItemID);
+	        request.setAttribute("listbill", listbill);
+	        request.setAttribute("listbillTotal", listbillTotal);
+	        RequestDispatcher dispatcher = request.getRequestDispatcher("ViewBills.jsp");
+	        dispatcher.forward(request, response);
+		}
+   }
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
