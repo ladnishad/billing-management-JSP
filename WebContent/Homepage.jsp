@@ -130,9 +130,6 @@
 					var linebreak = document.createElement("br");
 					linebreak.id = "br"
 					personalForm.appendChild(linebreak);
-					
-					//linebreak = document.createElement("br");
-					//personalForm.appendChild(linebreak);
 						
 					var optionArray = ["Harshit","Harish","Deep","Nishad"];
 					for (var j = 0; j < optionArray.length; j++) 

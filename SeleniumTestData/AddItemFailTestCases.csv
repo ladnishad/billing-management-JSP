@@ -1,0 +1,26 @@
+,,,Please enter a name for the item.,Please enter the cost of the item.,,Please correct the following errors
+,,M'ess,Please enter a name for the item.,Please enter the cost of the item.,Please remove the apostrophe.,Please correct the following errors
+,,Message123.,Please enter a name for the item.,Please enter the cost of the item.,,Please correct the following errors
+,abc,,Please enter a name for the item.,Please don't enter any special characters or text input. Valid input Ex: 2.45.,,Please correct the following errors
+,ab#,,Please enter a name for the item.,Please don't enter any special characters or text input. Valid input Ex: 2.45.,,Please correct the following errors
+,ab123,,Please enter a name for the item.,Please don't enter any special characters or text input. Valid input Ex: 2.45.,,Please correct the following errors
+,123#,,Please enter a name for the item.,Please don't enter any special characters or text input. Valid input Ex: 2.45.,,Please correct the following errors
+,12'22,,Please enter a name for the item.,Please don't enter any special characters or text input. Valid input Ex: 2.45.,,Please correct the following errors
+,$12 ,,Please enter a name for the item.,Please don't enter any special characters or text input. Valid input Ex: 2.45.,,Please correct the following errors
+,2.5,,Please enter a name for the item.,,,Please correct the following errors
+Hershey's,,,Please remove the apostrophe.,Please enter the cost of the item.,,Please correct the following errors
+Chocolates,,,Item is already present in the database.,Please enter the cost of the item.,,Please correct the following errors
+Hershey's,abc,,Please remove the apostrophe.,Please don't enter any special characters or text input. Valid input Ex: 2.45.,,Please correct the following errors
+Hershey's,ab#,,Please remove the apostrophe.,Please don't enter any special characters or text input. Valid input Ex: 2.45.,,Please correct the following errors
+Hershey's,ab123,,Please remove the apostrophe.,Please don't enter any special characters or text input. Valid input Ex: 2.45.,,Please correct the following errors
+Hershey's,123#,,Please remove the apostrophe.,Please don't enter any special characters or text input. Valid input Ex: 2.45.,,Please correct the following errors
+Hershey's,12'22,,Please remove the apostrophe.,Please don't enter any special characters or text input. Valid input Ex: 2.45.,,Please correct the following errors
+Hershey's,$12 ,,Please remove the apostrophe.,Please don't enter any special characters or text input. Valid input Ex: 2.45.,,Please correct the following errors
+Chocolates,abc,,Item is already present in the database.,Please don't enter any special characters or text input. Valid input Ex: 2.45.,,Please correct the following errors
+Chocolates,ab#,,Item is already present in the database.,Please don't enter any special characters or text input. Valid input Ex: 2.45.,,Please correct the following errors
+Chocolates,ab123,,Item is already present in the database.,Please don't enter any special characters or text input. Valid input Ex: 2.45.,,Please correct the following errors
+Chocolates,123#,,Item is already present in the database.,Please don't enter any special characters or text input. Valid input Ex: 2.45.,,Please correct the following errors
+Chocolates,12'22,,Item is already present in the database.,Please don't enter any special characters or text input. Valid input Ex: 2.45.,,Please correct the following errors
+Chocolates,$12 ,,Item is already present in the database.,Please don't enter any special characters or text input. Valid input Ex: 2.45.,,Please correct the following errors
+Energy Bar,$12 ,,,Please don't enter any special characters or text input. Valid input Ex: 2.45.,,Please correct the following errors
+Energy Bar,2.5,Message's,,,Please remove the apostrophe.,Please correct the following errors

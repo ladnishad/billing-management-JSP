@@ -1,0 +1,6 @@
+,Please enter the Bill ID.,Please correct the following errors
+1234556,Bill does not exist.,Please correct the following errors
+abcd,No special character or alphabets allowed. Valid input ex: 08041923123,Please correct the following errors
+1234abcd,No special character or alphabets allowed. Valid input ex: 08041923123,Please correct the following errors
+1234abcd#,No special character or alphabets allowed. Valid input ex: 08041923123,Please correct the following errors
+08041923123,,

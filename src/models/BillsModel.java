@@ -190,10 +190,6 @@ public class BillsModel {
 			errMsgs.setErrorMsg("Please correct the following errors");
 		}
 		
-		else{
-			errMsgs.setErrorMsg("");
-		}
-		
 	}
 	
 	public String validateInput(String billID){

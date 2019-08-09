@@ -74,11 +74,7 @@ public class AddItemModel {
 		errMsgs.setItemCommErrMsg(validateItemComm(addItem.getItemComm()));
 		String ItemCommErrMsg = errMsgs.getItemCommErrMsg();
 		
-		if (!ItemNameErrMsg.equals("") || !ItemCostErrMsg.equals("") || !ItemCommErrMsg.equals("") || 
-				!ItemNameErrMsg.equals("") && !ItemCostErrMsg.equals("") || 
-				!ItemNameErrMsg.equals("") && !ItemCommErrMsg.equals("") || 
-				!ItemCostErrMsg.equals("") && !ItemCommErrMsg.equals("") || 
-				!ItemNameErrMsg.equals("") && !ItemCostErrMsg.equals("") && !ItemCommErrMsg.equals(""))
+		if (!ItemNameErrMsg.equals("") || !ItemCostErrMsg.equals("") || !ItemCommErrMsg.equals(""))
 		{
 			errMsgs.setErrorMsg("Please correct the following errors");
 		}

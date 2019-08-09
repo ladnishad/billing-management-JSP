@@ -341,9 +341,7 @@ public class AddBillModel {
 		if(!CommItemNameErrMsg.equals("")||!CommItemQtyErrMsg.equals("")){
 			errMsgs.setErrorMsg("Please correct the above errors.");
 		}
-		else{
-			errMsgs.setErrorMsg("");
-		}
+		
 	}
 	
 	public void validatePersonalItem(AddBillModel addBill, AddBillErrMsgs errMsgs, String isPer){

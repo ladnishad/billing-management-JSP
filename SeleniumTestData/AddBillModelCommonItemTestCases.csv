@@ -1,0 +1,11 @@
+,,Please select an item.,Please enter the quantity.,Please correct the above errors.
+Energy drink,,Item not found in database.,Please enter the quantity.,Please correct the above errors.
+Chocolates,,,Please enter the quantity.,Please correct the above errors.
+Chocolates,abc,,Invalid input. Valid input ex: 2.,Please correct the above errors.
+Chocolates,abc#,,Invalid input. Valid input ex: 2.,Please correct the above errors.
+Chocolates,ab12,,Invalid input. Valid input ex: 2.,Please correct the above errors.
+Energy drink,abc,Item not found in database.,Invalid input. Valid input ex: 2.,Please correct the above errors.
+Energy drink,abc#,Item not found in database.,Invalid input. Valid input ex: 2.,Please correct the above errors.
+Energy drink,ab12,Item not found in database.,Invalid input. Valid input ex: 2.,Please correct the above errors.
+Chocolates,4,,,
+,4,Please select an item.,,Please correct the above errors.
