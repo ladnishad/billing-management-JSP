@@ -189,6 +189,9 @@ public class BillsModel {
 		if(!PastBillErrMsg.equals("")){
 			errMsgs.setErrorMsg("Please correct the following errors");
 		}
+		else{
+			errMsgs.setErrorMsg("");
+		}
 		
 	}
 	
@@ -196,19 +199,25 @@ public class BillsModel {
 		String result = "";
 		if(billID.equals("")){
 			result = "Please enter the Bill ID.";
+			
 		}
 		
 		else if(specialCharPresent(billID)){
 			result = "No special character or alphabets allowed. Valid input ex: 08041923123";
-		} else
+			
+		} 
+		else
 			try {
 				if(!BillsDAO.verifyBillPresent(billID)){
 					result = "Bill does not exist.";
+					
 				}
+				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		
 		return result;
 	}
 	

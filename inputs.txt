@@ -19,17 +19,23 @@ should be present in db
 Common item
 
 item cannot be blank
+can't have '
 item should be present in db
+
+cannot be blank
 Qty should be a number (no special chars)
 
 personal
 item cannot be blank
+can't have '
 item should be present in db
 
+cannot be blank
 Qty should be a number (no special chars)
 
 Num of users not greater than 4
 
-<input type="submit" value="Add to Bill" id="personalAdd" name="personalAdd"><br><br>
-    	
+Names cannot be same
+
+Sum of individual quant cannot be < or > total qty.    	
 

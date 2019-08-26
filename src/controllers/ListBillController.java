@@ -81,7 +81,7 @@ public class ListBillController extends HttpServlet {
 	        List<BillsModel> listbillTotal = billsdao.listBillTotal(ItemID);
 	        request.setAttribute("listbill", listbill);
 	        request.setAttribute("listbillTotal", listbillTotal);
-	        RequestDispatcher dispatcher = request.getRequestDispatcher("ViewBills.jsp");
+	        RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 	        dispatcher.forward(request, response);
 		}
    }

@@ -9,9 +9,7 @@ import org.junit.runners.MethodSorters;
 import junitparams.FileParameters;
 import junitparams.JUnitParamsRunner;
 import static org.junit.Assert.*;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
@@ -21,6 +19,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 import selenium.functions.AddItemsFunctions;
 
+//@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(JUnitParamsRunner.class)
 public class AddItemsSeleniumTest extends SeleniumTestBase{
 	  
@@ -35,7 +34,7 @@ public class AddItemsSeleniumTest extends SeleniumTestBase{
 	  public void AddItemsErrorTests(String ItemName, String ItemCost, String Comment, String ItemNameErr, String ItemCostErr,String CommErr,String ErrMsg) throws Exception {
 		  String error[] = new String[4];
 		  
-		  error = AddItemsErrorFunction(ItemName,ItemCost,Comment);
+		  error = AddItemsFunction(ItemName,ItemCost,Comment);
 		  
 		  assertEquals(ItemNameErr,error[0]);
 		  assertEquals(ItemCostErr,error[1]);
@@ -43,7 +42,20 @@ public class AddItemsSeleniumTest extends SeleniumTestBase{
 		  assertEquals(ErrMsg,error[3]);
 	  }
 	  
-	  public String[] AddItemsErrorFunction(String ItemName,String ItemCost,String Comment){
+	  @Test
+	  @FileParameters("./SeleniumTestData/AddItemSuccessTestCases.csv")
+	  public void AddItemsSuccessTests(String ItemName, String ItemCost, String Comment, String ItemNameErr, String ItemCostErr,String CommErr,String ErrMsg) throws Exception {
+		  String error[] = new String[4];
+		  
+		  error = AddItemsFunction(ItemName,ItemCost,Comment);
+		  
+		  assertEquals(ItemNameErr,error[0]);
+		  assertEquals(ItemCostErr,error[1]);
+		  assertEquals(CommErr,error[2]);
+		  assertEquals(ErrMsg,error[3]);
+	  }
+	  
+	  public String[] AddItemsFunction(String ItemName,String ItemCost,String Comment){
 			String error[] = new String[4];
 		  	driver.findElement(By.id("itemnameinput")).clear();
 		    driver.findElement(By.id("itemnameinput")).sendKeys(ItemName);

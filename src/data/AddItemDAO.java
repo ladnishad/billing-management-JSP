@@ -1,7 +1,6 @@
 package data;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -46,7 +45,37 @@ public class AddItemDAO {
     
     public boolean insertItem(AddItemModel addItemModel) throws SQLException {
     	
-		String sql = "INSERT INTO `bills_management`.`items` (ItemName,ItemCost,ItemComm) VALUES(?,?,?)";
+    	Connection conn = null;
+		Statement stmt = null;
+		conn = SQLConnection.getDBConnection();
+		boolean rowInserted = true; 
+    	try {
+			stmt = conn.createStatement();
+			String sql = "INSERT INTO `bills_management`.`items` (ItemName,ItemCost,ItemComm) VALUES('"+addItemModel.getItemName().toString()+"','"+addItemModel.getItemCost().toString()+"','"+addItemModel.getItemComm().toString()+"')";
+			//System.out.println(addItemModel.getItemName()+","+addItemModel.getItemCost());
+			//rowInserted = stmt.executeUpdate(sql) > 0;
+			stmt.executeUpdate(sql);
+			conn.commit();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	finally {
+			try {				
+				if(conn!=null)
+					conn.close();
+				if(stmt!=null)
+					stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+    	
+    	return rowInserted;
+    	
+    	
+    	
+    	/*String sql = "INSERT INTO `bills_management`.`items` (ItemName,ItemCost,ItemComm) VALUES(?,?,?)";
 		//String sql = "INSERT INTO `bills_management`.`items` (ItemName,ItemCost,ItemComm) VALUES('"+addItemModel.getItemName()+"','"+addItemModel.getItemCost()+"','"+addItemModel.getItemComm()+"')";
 		
 		 
@@ -59,7 +88,7 @@ public class AddItemDAO {
         boolean rowInserted = statement.executeUpdate() > 0;
         statement.close();
         disconnect();
-        return rowInserted;
+        return rowInserted;*/
     }
     
     public List<AddItemModel> listAllItems() throws SQLException {

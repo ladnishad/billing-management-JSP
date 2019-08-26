@@ -76,8 +76,11 @@ public class AddItemController extends HttpServlet {
             
 		}
         else{
-        	addItemdao.insertItem(addItemModel);
-        	
+        	url = "/AddItem.jsp";
+            addItemdao.insertItem(addItemModel);
+        	List<AddItemModel> listItemsAfterAdd = addItemdao.listAllItems();
+            request.setAttribute("listItems", listItemsAfterAdd);
+            getServletContext().getRequestDispatcher(url).forward(request, response);
         	
         }
         

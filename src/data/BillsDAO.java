@@ -1,5 +1,4 @@
 package data;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -8,7 +7,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import models.AddItemModel;
 import models.BillsModel;
 import util.SQLConnection;
 
@@ -17,6 +15,8 @@ public class BillsDAO {
     private String jdbcUsername;
     private String jdbcPassword;
     private Connection jdbcConnection;
+    
+    static SQLConnection sqlconnection = SQLConnection.getInstance();
     
     public BillsDAO(String jdbcURL, String jdbcUsername, String jdbcPassword) {
         this.jdbcURL = jdbcURL;
@@ -99,7 +99,6 @@ public class BillsDAO {
 		Statement stmt = null;
 		conn = SQLConnection.getDBConnection();
     	boolean billPresent = false;
-    	
     	try {
 			stmt = conn.createStatement();
 			String queryString = "select BillsID from `bills_management`.`billslist` where BillsID ='"+billID+"'";
@@ -107,7 +106,7 @@ public class BillsDAO {
 			while (rs.next()) {
 				String k = (String) rs.getObject(1);
 				billPresent = true;
-					break;
+				break;
 				}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -123,6 +122,6 @@ public class BillsDAO {
 				e.printStackTrace();
 			}
 		}
-		return billPresent;
+    	return billPresent;
 	}
 }
